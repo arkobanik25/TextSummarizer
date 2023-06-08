@@ -40,3 +40,11 @@ Once gRPC has been installed locally, be sure to add the local install path to y
 export PATH="$MY_INSTALL_DIR/bin:$PATH"
 ```
 
+## Building the Project
+Once you have satisfied the above prerequisites, run the following commands to build the executable
+``` 
+mkdir build 
+cd build
+cmake ..
+make 
+```
