@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+service TokenizerRPC {
+  rpc Tokenize (TokenizeRequest) returns (TokenizeResponse);
+  rpc Decode (DecodeRequest) returns (DecodeResponse);
+}
+
+// message IntMatrix {
+//   uint32 rows = 1;
+//   uint32 cols = 2;
+//   repeated int32 data = 3 [packed=true];
+// }
+message TokenizeRequest {
+  string text = 1;
+}
+
+message TokenizeResponse {
+  repeated int32 tokens = 1;
+  repeated int32 attention_mask = 2;
+}
+
+message DecodeRequest {
+  repeated int32 tokens = 1;
+}
+
+message DecodeResponse {
+  string text = 1;
+}

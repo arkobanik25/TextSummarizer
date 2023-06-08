@@ -1,0 +1,12 @@
+# Ignore build folders
+/*build*/
+/bin/
+/lib/
+/out/
+
+# Ignore Visual Studio Code related files
+.vscode/
+*.code-workspace
+*:Zone.Identifier
+*__pycache__*
+*.so*
