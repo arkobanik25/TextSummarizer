@@ -31,3 +31,12 @@ Make sure the following files are in the same directory that ./TextSummarizer is
 encoder_model.onnx
 decoder_model.onnx
 ```
+
+## gRPC
+To build the gRPC C++ source files, install gRPC locally. To install gRPC locally follow [here.] (https://grpc.io/docs/languages/cpp/quickstart/)
+
+Once gRPC has been installed locally, be sure to add the local install path to your PATH.
+```
+export PATH="$MY_INSTALL_DIR/bin:$PATH"
+```
+
