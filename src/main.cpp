@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <vector>
 #include <chrono>
+#include <malloc.h>
 
 #include "tokenizer.hpp"
 #include "summarizer.hpp"
@@ -67,16 +68,21 @@ int main(int argc, char* argv[]) {
 
     // Load the Tokenizer Class
     auto tokenizer = TokenizergRPC();
-    Summarizer model;
 
     if(profile_mode) {
         // Run through using a default input for profiling
         std::string input_sentence = "CNN)Governments around the world are using the threat of terrorism -- real or perceived -- to advance executions, Amnesty International alleges in its annual report on the death penalty. \"The dark trend of governments using the death penalty in a futile attempt to tackle real or imaginary threats to state security and public safety was stark last year,\" said Salil Shetty, Amnesty's Secretary General in a release. \"It is shameful that so many states around the world are essentially playing with people's lives -- putting people to death for 'terrorism' or to quell internal instability on the ill-conceived premise of deterrence.\" The report, \"Death Sentences and Executions 2014,\" cites the example of Pakistan lifting a six-year moratorium on the execution of civilians following the horrific attack on a school in Peshawar in December. China is also mentioned, as having used the death penalty as a tool in its \"Strike Hard\" campaign against terrorism in the restive far-western province of Xinjiang";
         auto tokens = tokenizer.tokenize(input_sentence);
 
+        struct mallinfo before = mallinfo();
+        Summarizer model;
+
         auto startTime = std::chrono::high_resolution_clock::now();
         auto seq = model.generate(tokens.input_ids, tokens.attention_mask, 2, 60);
         auto endTime = std::chrono::high_resolution_clock::now();
+        struct mallinfo after = mallinfo();
+        int memoryUsed = after.uordblks - before.uordblks;
+        std::cout << "Memory used by the ONNX Model: " << memoryUsed << " bytes" << std::endl;
 
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
         std::cout << "Generation Execution time: " << duration.count() << " milliseconds" << std::endl;
@@ -85,6 +91,9 @@ int main(int argc, char* argv[]) {
         std::cout << "Generated Sumamry: \n"  << decoded << std::endl;
         return 0;
     } 
+
+    // Load the Model
+    Summarizer model;
 
     std::string input;
     bool exit = false;

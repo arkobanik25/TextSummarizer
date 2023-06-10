@@ -8,11 +8,6 @@
 #include <unordered_map>
 #include <grpcpp/grpcpp.h>
 
-// Static Helper functions
-// static bool fileExists(const std::string& filename) {
-//     std::ifstream file(filename);
-//     return file.good();
-// }
 
 TokenizergRPC::TokenizergRPC() {
     // Create gRPC channel
